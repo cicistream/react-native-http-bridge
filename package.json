@@ -1,26 +1,24 @@
-
 {
-  "name": "react-native-http-bridge",
-  "version": "0.6.1",
-  "description": "A simple HTTP debug server for React Native apps",
+  "name": "react-native-app-server",
+  "version": "1.0.0",
+  "description": "Simple HTTP server for [React Native](https://github.com/facebook/react-native). Created for [Status.im](https://github.com/status-im/status-react).",
   "main": "httpServer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alwx/react-native-http-bridge.git"
+    "url": "git+https://github.com/cicistream/react-native-http-bridge.git"
   },
   "keywords": [
-    "react-component",
     "react-native",
-    "nanohttpd",
-    "gcdhttpserver",
-    "http",
-    "server",
-    "bridge"
+    "app-server",
+    "server"
   ],
-  "author": "Alexander Pantyukhov",
-  "license": "MIT",
+  "author": "cicistream",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alwx/react-native-http-bridge/issues"
+    "url": "https://github.com/cicistream/react-native-http-bridge/issues"
   },
-  "homepage": "https://github.com/alwx/react-native-http-bridge#readme"
+  "homepage": "https://github.com/cicistream/react-native-http-bridge#readme"
 }

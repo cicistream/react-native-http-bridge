@@ -1,4 +1,4 @@
-# react-native-http-bridge
+# react-native-app-server
 
 Simple HTTP server for [React Native](https://github.com/facebook/react-native).
 Created for [Status.im](https://github.com/status-im/status-react). 
@@ -12,7 +12,7 @@ Since 0.6.0 can handle millions of requests at the same time and also includes s
 ## Install
 
 ```shell
-npm install --save react-native-http-bridge
+npm install --save react-native-app-server
 ```
 
 ## Automatically link
@@ -20,7 +20,7 @@ npm install --save react-native-http-bridge
 #### With React Native 0.27+
 
 ```shell
-react-native link react-native-http-bridge
+react-native link react-native-app-server
 ```
 
 ## Example
@@ -29,7 +29,7 @@ First import/require react-native-http-server:
 
 ```js
 
-    var httpBridge = require('react-native-http-bridge');
+    var httpBridge = require('react-native-app-server');
 
 ```
 
@@ -40,13 +40,13 @@ Initalize the server in the `componentWillMount` lifecycle method. You need to p
 
     componentWillMount() {
       // initalize the server (now accessible via localhost:1234)
-      httpBridge.start(5561, function(request) {
+      httpBridge.start(5561,path, function(request) {
 
           // you can use request.url, request.type and request.postData here
           if (request.type === "GET" && request.url.split("/")[1] === "users") {
-            httpBridge.respond(200, "application/json", "{\"message\": \"OK\"}");
+            httpBridge.respond(requestId, 200, "application/json", "{\"message\": \"OK\"}");
           } else {
-            httpBridge.respond(400, "application/json", "{\"message\": \"Bad Request\"}");
+            httpBridge.respond(requestId, 400, "application/json", "{\"message\": \"Bad Request\"}");
           }
 
       });
