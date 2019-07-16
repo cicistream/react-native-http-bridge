@@ -6,6 +6,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactMethod;
 
+import java.io.File;
 import java.io.IOException;
 
 import android.util.Log;
@@ -13,9 +14,10 @@ import android.util.Log;
 public class HttpServerModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
     ReactApplicationContext reactContext;
 
-    private static final String MODULE_NAME = "HttpServer";
-
     private static int port;
+    private static String root;
+    private static File www_root;
+
     private static Server server = null;
 
     public HttpServerModule(ReactApplicationContext reactContext) {
@@ -27,21 +29,19 @@ public class HttpServerModule extends ReactContextBaseJavaModule implements Life
 
     @Override
     public String getName() {
-        return MODULE_NAME;
+        return "HttpServer";
     }
 
     @ReactMethod
-    public void start(int port, String serviceName) {
-        Log.d(MODULE_NAME, "Initializing server...");
+    public void start(int port, String root) {
         this.port = port;
+        this.root = root;
 
         startServer();
     }
 
     @ReactMethod
     public void stop() {
-        Log.d(MODULE_NAME, "Stopping server...");
-
         stopServer();
     }
 
@@ -72,13 +72,19 @@ public class HttpServerModule extends ReactContextBaseJavaModule implements Life
             return;
         }
 
+        if (this.root != null && (this.root.startsWith("/") || this.root.startsWith("file:///"))) {
+            www_root = new File(root);
+        } else {
+            www_root = new File(this.reactContext.getFilesDir(), this.root);
+        }
+
         if (server == null) {
-            server = new Server(reactContext, port);
+            server = new Server(reactContext, port, www_root);
         }
         try {
             server.start();
         } catch (IOException e) {
-            Log.e(MODULE_NAME, e.getMessage());
+            Log.e("HttpServer", e.getMessage());
         }
     }
 
